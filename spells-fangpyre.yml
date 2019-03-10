@@ -1,5 +1,7 @@
 #Abilities:
-#Life Drain Passive, Transfusion Beam, Crimson Deception
+#Life Drain Passive
+#Transfusion Beam
+#Crimson Deception
 
 lifedrain:
     spell-class: ".PassiveSpell"
