@@ -1,0 +1,404 @@
+rotatedmg:
+    spell-class: ".targeted.AreaEffectSpell"
+    name: rotatedmg
+    description: Kick all enemies around you
+    helper-spell: true
+    horizontal-radius: 3
+    vertical-radius: 3
+    max-targets: 0
+    point-blank: true
+    target-players: true
+    can-target: players,nonplayers
+    fail-if-no-targets: false
+    spells:
+        - DMG_rotateproj2
+        - lotusstun
+    cooldown: 15
+
+rotate:
+    spell-class: ".targeted.RotateSpell"
+    rotation: 10
+    helper-spell: true
+    target-self: true
+    effects:
+      Example:
+        position: target
+        effect: effectlib
+        effectlib:
+            class: TextEffect
+            particle: REDSTONE
+            text: o
+            size: 0.7
+            radius: 2
+            iterations: 1
+            y-offset: 1
+            color: A4A4A4
+
+
+Leaf Whirlwind:
+    spell-class: ".MultiSpell"
+    name: "&2Leaf Whirlwind"
+    cast-item: magma_cream
+    cooldown: 30
+    check-individual-cooldowns: false
+    cost:
+        - mana 50
+    str-cost: 50 mana
+    spells:
+        - rotate
+        - rotateproj
+        - rotatedmg
+        - DELAY 1
+        - rotate
+        - rotateproj
+        - DELAY 1
+        - rotate
+        - rotateproj
+        - rotatedmg
+        - DELAY 1
+        - rotate
+        - rotateproj
+        - DELAY 1
+        - rotate
+        - rotateproj
+        - rotatedmg
+        - DELAY 1
+        - rotate
+        - rotateproj
+        - DELAY 1
+        - rotate
+        - rotateproj
+        - rotatedmg
+        - DELAY 1
+        - rotate
+        - rotateproj
+        - DELAY 1
+        - rotate
+        - rotateproj
+        - rotatedmg
+        - DELAY 1
+        - rotate
+        - rotateproj
+        - rotate
+        - DELAY 1
+        - rotateproj
+        - rotatedmg
+        - rotate
+        - DELAY 1
+        - rotateproj
+        - rotate
+        - DELAY 1
+        - rotate
+        - rotateproj
+        - rotatedmg
+        - DELAY 1
+        - rotate
+        - rotateproj
+        - DELAY 1
+        - rotate
+        - rotateproj
+        - rotatedmg
+        - DELAY 1
+        - rotate
+        - rotateproj
+        - DELAY 1
+        - rotate
+        - rotateproj
+        - rotatedmg
+        - DELAY 1
+        - rotate
+        - rotateproj
+        - DELAY 1
+        - rotate
+        - rotateproj
+        - rotatedmg
+        - rotate
+        - DELAY 1
+        - rotate
+        - rotateproj
+        - rotatedmg
+        - DELAY 1
+        - rotate
+        - rotateproj
+        - DELAY 1
+        - rotate
+        - rotateproj
+        - rotatedmg
+        - DELAY 1
+        - rotate
+        - rotateproj
+        - DELAY 1
+        - rotate
+        - rotateproj
+        - rotatedmg
+        - DELAY 1
+        - rotate
+        - rotateproj
+        - DELAY 1
+        - rotate
+        - rotateproj
+        - rotatedmg
+        - DELAY 1
+        - rotate
+        - rotateproj
+        - DELAY 1
+        - rotate
+        - rotateproj
+        - rotatedmg
+        - rotate
+        - DELAY 1
+        - rotate
+        - rotateproj
+        - DELAY 1
+        - rotate
+        - rotateproj
+        - rotatedmg
+        - DELAY 1
+        - rotate
+        - rotateproj
+        - DELAY 1
+        - rotate
+        - rotateproj
+        - rotatedmg
+        - DELAY 1
+        - rotate
+        - rotateproj
+        - DELAY 1
+        - rotate
+        - rotateproj
+        - rotatedmg
+
+rotateproj:
+    spell-class: ".instant.ParticleProjectileSpell"
+    projectile-velocity: 20
+    tick-interval: 1
+    helper-spell: true
+    cooldown: 7
+    hug-surface: false
+    height-from-surface: 1
+    particle-name: smoke
+    particle-speed: 0.0001
+    particle-count: 1
+    particle-horizontal-spread: 0.1
+    particle-vertical-spread: 0.1
+    max-distance: 2
+    max-duration: 2
+    hit-radius: 1
+    hit-players: true
+    hit-nonplayers: true
+    hit-air-at-end: true
+    hit-air-during: true
+    stop-on-hit-entity: true
+    stop-on-hit-ground: false
+    spell: DMG_rotateproj
+    effects:
+      1:
+        position: caster
+        effect: sound
+        sound: entity.player.attack.sweep
+        volume: 1
+        pitch: 1
+
+DMG_rotateproj:
+    spell-class: ".targeted.PainSpell"
+    cooldown: 5
+    helper-spell: true
+    damage: 6
+    range: 15
+    ignore-armor: false
+    obey-los: true
+    target-players: true
+    check-plugins: true
+
+DMG_rotateproj2:
+    spell-class: ".targeted.PainSpell"
+    cooldown: 5
+    helper-spell: true
+    damage: 3
+    range: 15
+    ignore-armor: false
+    obey-los: true
+    target-players: true
+    check-plugins: true
+
+lotusstun:
+    spell-class: ".targeted.StunSpell"
+    duration: 2
+    helper-spell: true
+
+lotussilence:
+    spell-class: ".targeted.SilenceSpell"
+    name: lotussilence
+    description: Prevent a player from casting spells for a time.
+    cast-item: 414
+    range: 15
+    prevent-cast: true
+    prevent-chat: false
+    prevent-commands: false
+    duration: 200
+    allowed-spells:
+        - list
+        - help
+    cost:
+        - 331 2
+    str-cost: 2 redstone dust
+    str-silenced: You are silenced.
+lotusenemy:
+    spell-class: ".targeted.ForcetossSpell"
+    name: lotusenemy
+    spell-icon: piston_base
+    description: Magically throw an enemy into the air.
+    cast-item: 414
+    cooldown: 5
+    range: 2
+    damage: 2
+    horizontal-force: 0
+    vertical-force: 12
+    obey-los: true
+    target-players: true
+    check-plugins: true
+    cost:
+        - mana 10
+    str-cost: 10 mana
+    str-no-target: No target found.
+
+lotuscaster:
+    spell-class: ".instant.LeapSpell"
+    name: lotuscaster
+    spell-icon: diamond_boots
+    description: Leap forward.
+    cast-item: 414
+    forward-velocity: 0
+    upward-velocity: 12
+    cancel-damage: true
+    cooldown: 10
+    cost:
+        - mana 15
+    str-cost: mana 15
+
+Primary Lotus:
+    spell-class: ".TargetedMultiSpell"
+    name: "&2Primary Lotus"
+    cast-item: magma_cream
+    cooldown: 30
+    check-individual-cooldowns: false
+    require-entity-target: true
+    target-players: true
+    cost:
+        - mana 50
+        - health 4
+    str-cost: 50 mana and 2 hearts
+    spells:
+        - shadowstep
+        - lotusenemy
+        - lotuscaster
+        - lotussilence
+        - DELAY 55
+        - lotusstun
+
+shadowstep:
+    spell-class: ".targeted.ShadowstepSpell"
+    name: shadowstep
+    spell-icon: leather_boots
+    effects:
+        - caster spawner
+        - target spawner
+    can-target: players,nonplayers
+    range: 15
+    cost:
+        - mana 10
+    str-cost: 10 mana
+
+LeeSpeed:
+    spell-class: ".buff.HasteSpell"
+    name: LeeSpeed
+    description: Sprint faster for a time.
+    effect-strength: 10
+    boost-duration: 300
+    duration: 15
+    cost:
+        - mana 50
+    str-cost: 50 mana
+
+Leepower:
+    spell-class: ".buff.EmpowerSpell"
+    name: Leepower
+    description: Makes your spells more powerful.
+    power-multiplier: 1.3
+    cooldown: 120
+    duration: 300
+    num-uses: 50
+    cost:
+        - mana 50
+    use-cost:
+        - mana 10
+    use-cost-interval: 1
+    str-cost: 50 mana, plus 10 mana for each spell cast
+    str-cast-self: You feel yourself glowing with magical energy.
+    str-cast-others: "%a begins to glow with magical energy."
+    str-fade: You are no longer glowing with magical energy.
+
+leestr:
+    spell-class: ".targeted.PotionEffectSpell"
+    name: leestr
+    spell-icon: spider_eye
+    description: Stength
+    cooldown: 15
+    beneficial: true
+    range: 2
+    type: 5
+    strength: 0
+    duration: 280
+    obey-los: true
+    cost:
+        - mana 12
+    str-cost: 12 mana
+
+leereg:
+    spell-class: ".targeted.PotionEffectSpell"
+    name: leereg
+    spell-icon: spider_eye
+    description: Regen
+    cooldown: 15
+    beneficial: true
+    range: 2
+    type: 10
+    strength: 0
+    duration: 280
+    obey-los: true
+    cost:
+        - mana 12
+    str-cost: 12 mana
+
+The Gate of Life:
+    spell-class: ".MultiSpell"
+    name: "&2The Gate of Life"
+    cast-item: magma_cream
+    cooldown: 50
+    check-individual-cooldowns: false
+    cost:
+        - mana 135
+    str-cost: 135 mana
+    spells:
+        - LeeSpeed
+        - Leepower
+        - leestr
+        - leereg
+    effects:
+      ash1:
+        position: orbit
+        orbit-radius: 0
+        orbit-seconds-per-revolution: 0.1
+        orbit-tick-interval: 3
+        orbit-y-offset: 1.0
+        effect: particles
+        particle-name: lava
+        horiz-spread: 0.3
+        vert-spread: 0.5
+        speed: 0
+        count: 10
+        y-offset: 1
+
+
+
+MAKE THE PRIMARY LOTUS JUTSU KNOCK YOU AND THE OPPONENT UP AT THE SAME TIME, STUNNING THE OPPONENT AND SILENCING HIM
