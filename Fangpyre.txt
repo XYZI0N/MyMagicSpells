@@ -1,0 +1,181 @@
+#Abilities:
+#Life Drain Passive, Transfusion Beam, Crimson Deception
+
+lifedrain:
+    spell-class: ".PassiveSpell"
+    triggers: 
+        - givedamage
+    modifiers:
+        - potioneffect 14 castinstead Crimpassiveproc
+    chance: 100
+    cooldown: 0.5
+    spells:
+        - drainlife
+
+Crimpassiveproc:
+    spell-class: ".TargetedMultiSpell"
+    check-individual-cooldowns: false
+    show-individual-messages: false
+    spells:
+        - drainlife
+        - wither
+
+drainlife:
+    spell-class: ".targeted.DrainlifeSpell"
+    name: drainlife
+    spell-icon: ghast_tear
+    description: Drain life from your enemy and give it to you.
+    range: 5
+    take-type: health
+    take-amt: 0
+    give-type: health
+    give-amt: 2
+    show-spell-effect: false
+    animation-speed: 2
+    ignore-armor: false
+    obey-los: true
+    target-players: true
+    check-plugins: true
+    cost:
+        - mana 5
+    str-cost: 5 mana
+    str-cast-self: You drain life from your enemy.
+
+transfusiondmg:
+    spell-class: ".TargetedMultiSpell"
+    cooldown: 30
+    check-individual-cooldowns: false
+    show-individual-messages: false
+    spells:
+        - drainlife
+        - epain
+        - DELAY 10
+        - drainlife
+        - epain
+
+TransfusionBeam:
+    spell-class: ".instant.ParticleProjectileSpell"
+    name: "&4Transfusion Beam"
+    cast-item: magma_cream
+    cooldown: 25
+    projectile-velocity: 20
+    projectile-horiz-offset: 0
+    projectile-vert-offset: 0
+    projectile-spread: 0
+    projectile-gravity: 0
+    power-affects-velocity: false
+    tick-interval: 1
+    special-effect-interval: 1
+    start-y-offset: 1
+    start-forward-offset: 0
+    particle-name: reddust
+    particle-speed: 0
+    particle-count: 1
+    particle-horizontal-spread: 0
+    particle-vertical-spread: 0
+    max-distance: 20
+    max-duration: 10
+    hug-surface: false
+    height-from-surface: 1.0
+    hit-radius: 1
+    vertical-hit-radius: 1
+    render-distance: 50
+    spell-interval: 5
+    hit-air-during: true
+    hit-self: false
+    hit-players: true
+    hit-non-players: true
+    hit-ground: false
+    stop-on-hit-ground: false
+    stop-on-hit-entity: false
+    spell: transfusiondmg
+    cost:
+        - mana 50
+        - health 3
+    str-cost: 50 mana plus 1 1/2 hearts.
+    effects:
+      Effectlib:
+        position: special
+        effect: effectlibentity
+        effectlib:
+            class: DnaEffect
+            particleHelix: REDSTONE
+            particleBase1: REDSTONE
+            colorBase1: 000000
+            particleBase2: REDSTONE
+            colorBase2: 000000
+            radius: 0.5
+            particlesHelix: 1
+            particlesBase: 5
+            length: 20
+            grow: 0.5
+            baseInterval: 20
+            step: 0
+            iterations: 20
+
+CrimsonDeception:
+    spell-class: ".targeted.ShadowstepSpell"
+    name: "&4Crimson Deception"
+    cooldown: 20
+    spell-icon: leather_boots
+    cast-item: magma_cream
+    modifiers:
+        - foodbelow 4 castinstead CrimDecep
+        - lightlevelbelow 1 castinstead CrimDecep
+    effects:
+        - caster spawner
+        - target spawner
+    can-target: players,nonplayers
+    range: 15
+    cost:
+        - mana 35
+        - health 6
+    str-cost: 35 mana
+    str-no-target: No target found.
+    str-no-landing-spot: Cannot shadowstep there.
+
+vampinvis:
+    spell-class: ".targeted.PotionEffectSpell"
+    name: vampinvis
+    spell-icon: spider_eye
+    description: Invis.
+    cooldown: 15
+    range: 20
+    type: 14
+    strength: 0
+    ambient: true
+    duration: 200
+    targeted: false
+    target-players: false
+    target-non-players: false
+    obey-los: true
+    cost:
+        - mana 12
+    str-cost: 12 mana
+
+vampspeed:
+    spell-class: ".targeted.PotionEffectSpell"
+    name: vampspeed
+    spell-icon: spider_eye
+    description: speed.
+    cooldown: 15
+    range: 20
+    type: 1
+    strength: 2
+    ambient: true
+    duration: 200
+    targeted: false
+    target-players: false
+    target-non-players: false
+    obey-los: true
+    cost:
+        - mana 12
+    str-cost: 12 mana
+
+CrimDecep:
+    spell-class: ".MultiSpell"
+    cooldown: 20
+    check-individual-cooldowns: false
+    spells:
+        - vampinvis
+        - vampspeed
