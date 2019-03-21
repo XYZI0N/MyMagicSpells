@@ -1,0 +1,224 @@
+variables:
+    beamcann:
+          type: player
+          default: 0
+          min: 0
+          max: 6
+          permanent: false
+
+beamstoppassive:
+    spell-class: ".PassiveSpell"
+    triggers: 
+        - takedamage
+    chance: 100
+    cooldown: 0
+    spells:
+        - beamstopdummybuff
+
+beamstopdummybuff:
+    spell-class: ".buff.DummySpell"
+    helper-spell: true
+    duration: 2
+
+SpecialBeamCannon:
+    spell-class: ".MultiSpell" 
+    name: "&eSpecial Beam Cannon"
+    modifiers:
+        - variableequals beamcann:6 castinstead VarBeamDummyend
+        - buffactive beamstopdummybuff denied
+    cast-item: 289
+    cooldown: 35    
+    cost:
+        - mana 100
+    spells:
+        - Special_Effect1
+        - DELAY 8
+        - VarBeamDummy
+        - DELAY 8
+        - SpecialBeamCannon
+
+VarBeamDummy:
+    spell-class: ".instant.DummySpell"
+    helper-spell: true
+    variable-mods-cast:
+        - beamcann +1
+
+VarBeamDummyend:
+    spell-class: ".instant.DummySpell"
+    helper-spell: true
+    variable-mods-cast:
+        - beamcann 0
+
+Special_Effect1:
+    spell-class: ".buff.DummySpell"
+    helper-spell: true
+    duration: 4.5
+    modifiers:
+        - variableequals beamcann:1 castinstead Special_Effect2
+        - variableequals beamcann:2 castinstead Special_Effect3
+        - variableequals beamcann:3 castinstead Special_Effect4
+        - variableequals beamcann:4 castinstead Special_Effect5
+        - variableequals beamcann:5 castinstead Special_Beam_Fire
+    effects:
+      sound:
+        position: caster
+        effect: sound
+        sound: entity.generic.extinguish_fire
+        volume: 0.3
+        pitch: 0.9
+      cloud:
+        position: orbit
+        orbit-radius: 0
+        orbit-seconds-per-revolution: 0.1
+        orbit-tick-interval: 3
+        orbit-y-offset: 1.0
+        effect: particles
+        particle-name: blockcrack_12_0
+        horiz-spread: 0.3
+        vert-spread: 0.5
+        speed: 0
+        count: 5
+        y-offset: 0
+
+Special_Effect2:
+    spell-class: ".buff.DummySpell"
+    helper-spell: true
+    duration: 3.5
+    effects:
+      sound:
+        position: caster
+        effect: sound
+        sound: entity.generic.extinguish_fire
+        volume: 0.3
+        pitch: 0.9
+      cloud:
+        position: orbit
+        orbit-radius: 0
+        orbit-seconds-per-revolution: 0.1
+        orbit-tick-interval: 3
+        orbit-y-offset: 1.0
+        effect: particles
+        particle-name: blockcrack_35_4
+        horiz-spread: 0.3
+        vert-spread: 0.5
+        speed: 0
+        count: 5
+        y-offset: 0
+
+Special_Effect3:
+    spell-class: ".buff.DummySpell"
+    helper-spell: true
+    duration: 2.5
+    effects:
+      sound:
+        position: caster
+        effect: sound
+        sound: entity.generic.extinguish_fire
+        volume: 0.3
+        pitch: 0.9
+      cloud:
+        position: orbit
+        orbit-radius: 0
+        orbit-seconds-per-revolution: 0.1
+        orbit-tick-interval: 3
+        orbit-y-offset: 1.0
+        effect: particles
+        particle-name: blockcrack_89_0
+        horiz-spread: 0.3
+        vert-spread: 0.5
+        speed: 0
+        count: 5
+        y-offset: 0
+
+Special_Effect4:
+    spell-class: ".buff.DummySpell"
+    helper-spell: true
+    duration: 1.5
+    effects:
+      sound:
+        position: caster
+        effect: sound
+        sound: entity.generic.extinguish_fire
+        volume: 0.3
+        pitch: 0.9
+      cloud:
+        position: orbit
+        orbit-radius: 0
+        orbit-seconds-per-revolution: 0.1
+        orbit-tick-interval: 3
+        orbit-y-offset: 1.0
+        effect: particles
+        particle-name: blockcrack_95_4
+        horiz-spread: 0.3
+        vert-spread: 0.5
+        speed: 0
+        count: 5
+        y-offset: 0
+
+Special_Effect5:
+    spell-class: ".buff.DummySpell"
+    helper-spell: true
+    duration: 1
+    effects:
+      sound:
+        position: caster
+        effect: sound
+        sound: entity.generic.extinguish_fire
+        volume: 0.3
+        pitch: 0.9
+      cloud:
+        position: orbit
+        orbit-radius: 0
+        orbit-seconds-per-revolution: 0.1
+        orbit-tick-interval: 3
+        orbit-y-offset: 1.0
+        effect: particles
+        particle-name: blockcrack_41_0
+        horiz-spread: 0.3
+        vert-spread: 0.5
+        speed: 0
+        count: 5
+        y-offset: 0
+
+Special_Beam_Fire:
+    spell-class: ".instant.BeamSpell"
+    helper-spell: true
+    y-offset: 0
+    relative-offset: 0,0,0
+    hit-radius: 2
+    vertical-hit-radius: 2
+    rotation: 0
+    max-distance: 25
+    spell: Special_Beam_Damage_Full
+    effects:
+      sound:
+        position: special
+        effect: sound
+        sound: entity.generic.explode
+        volume: 2
+        pitch: 0.5
+      gold:
+        position: special
+        effect: particles
+        particle-name: blockcrack_41_0
+        horiz-spread: 1
+        vert-spread: 1
+        speed: 0.05
+        count: 15
+      glass:
+        position: special
+        effect: particles
+        particle-name: blockcrack_95_4
+        horiz-spread: 1
+        vert-spread: 1
+        speed: 0.05
+        count: 10
+Special_Beam_Damage_Full:
+    spell-class: ".targeted.PainSpell"
+    helper-spell: true
+    damage: 15
+    ignore-armor: false
+    obey-los: true
+    can-target: players,nonplayers
+    check-plugins: true
+    beneficial: false
