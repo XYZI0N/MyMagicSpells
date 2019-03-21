@@ -1,0 +1,153 @@
+# Second idea, use minion spell with bats, aoe uses painspell that targets bats, spell-on-death: explodes bats
+
+ScatterbombbatTracer:
+    spell-class: ".PassiveSpell"
+    triggers: 
+        - ticks 7
+    modifiers:
+        - buffactive scatterbombparticledummy required
+    chance: 100
+    cooldown: 0
+    spells:
+        - ScatterbombparticleAoE
+
+scatterbombparticledummy:
+    spell-class: ".buff.DummySpell"
+    helper-spell: true
+    duration: 2.1
+
+ScatterbombparticleAoE:
+    spell-class: ".targeted.AreaEffectSpell"
+    name: ScatterbombparticleAoE
+    helper-spell: true
+    description: particle emitter
+    horizontal-radius: 500
+    vertical-radius: 500
+    max-targets: 0
+    point-blank: true
+    target-players: false
+    target-non-players: false
+    can-target: bat
+    fail-if-no-targets: false
+    spells:
+        - scatterbombparticles
+
+scatterbombparticles:
+    spell-class: ".targeted.PotionEffectSpell"
+    name: scatterbombparticles
+    helper-spell: true
+    spell-icon: spider_eye
+    description: Poison your target.
+    cooldown: 0
+    range: 20
+    type: 16
+    strength: 2
+    duration: 1
+    targeted: true
+    target-players: false
+    target-non-players: true
+    can-target: bat
+    obey-los: true
+    effects:
+        1:
+            position: target
+            effect-interval: 1
+            effect: particles
+            particle-name: smoke
+            horiz-spread: 0
+            vert-spread: 0
+            count: 10
+            speed: 0
+            y-offset: 0
+
+scatterbombselfstun:
+    spell-class: ".targeted.StunSpell"
+    target-self: true
+    duration: 20
+
+scatterbombmulti:
+    spell-class: ".MultiSpell"
+    name: "Scatter Bomb"
+    cast-item: 289
+    cooldown: 20
+    cost:
+        - mana 100
+    str-cost: 100 Mana
+    check-individual-cooldowns: false
+    spells:
+        - scatterbombparticledummy
+        - scatterbombbat
+        - scatterbombbat
+        - scatterbombbat
+        - scatterbombbat
+        - scatterbombbat
+        - DELAY 1
+        - scatterbombbat
+        - DELAY 2
+        - scatterbombselfstun
+        - scatterbombbat
+        - DELAY 3
+        - scatterbombbat
+        - DELAY 4
+        - scatterbombbat
+        - DELAY 10
+        - scatterbombaoemulti
+
+scatterbombaoemulti:
+    spell-class: ".TargetedMultiSpell"
+    name: scatterbombaoemulti
+    helper-spell: true
+    cooldown: 10
+    stop-on-fail: false
+    require-entity-target: true
+    can-target: bat
+    check-individual-cooldowns: false
+    spells:
+        - scatterbombaoe
+
+ScatterBombExplosion:
+    spell-class: ".targeted.ExplodeSpell"
+    name: ScatterBombExplosion
+    helper-spell: true
+    spell-icon: tnt
+    description: Create an explosion.
+    range: 100
+    explosion-size: 3
+    backfire-chance: 0
+    prevent-block-damage: true
+    prevent-player-damage: false
+    damage-multiplier: 2
+    add-fire: false
+    simulate-tnt: true
+    ignore-canceled: false
+    str-no-target: You cannot create an explosion there.
+    str-cast-self: Boom!
+    str-cast-others: Boom!
+
+scatterbombbat:
+    spell-class: ".targeted.SpawnMonsterSpell"
+    name: scatterbombbat
+    helper-spell: true
+    location: random
+    entity-type: bat
+    allow-spawn-in-midair: true
+    tamed: false
+    range: 4
+    potion-effects:
+      - 14 5000 0
+
+scatterbombaoe:
+    spell-class: ".targeted.AreaEffectSpell"
+    name: scatterbombaoe
+    helper-spell: true
+    description: casts explosion on bats
+    horizontal-radius: 500
+    vertical-radius: 500
+    max-targets: 0
+    point-blank: true
+    target-players: false
+    target-non-players: false
+    can-target: bat
+    fail-if-no-targets: true
+    spells:
+        - ScatterBombExplosion
