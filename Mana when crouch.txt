@@ -1,0 +1,46 @@
+manapassive1:
+    spell-class: ".PassiveSpell"
+    triggers: 
+        - ticks 2
+    chance: 100
+    cooldown: 0
+    modifiers: 
+        - sneaking required
+    spells:
+        - manaregen
+
+manaregen:
+    spell-class: ".instant.ManaSpell"
+    name: manaregen
+    helper-spell: true
+    spell-icon: potion:8193
+    description: Restores mana
+    cooldown: 0
+    mana: 1
+    effects:
+      1:
+        position: caster
+        effect: particles
+        particle-name: mobSpellAmbient
+        effect-interval: 15
+        horiz-spread: 0.1
+        vert-spread: 0.5
+        speed: 1
+        count: 10
+        y-offset: 0.2
+      2:
+        position: caster
+        effect: particles
+        particle-name: mobSpell
+        effect-interval: 10
+        horiz-spread: 0.1
+        vert-spread: 0.5
+        speed: 1
+        count: 1
+        y-offset: 0.2
+      3:
+        position: caster
+        effect: sound
+        sound: block.sand.place
+        volume: 0.30
+        pitch: 0.55
