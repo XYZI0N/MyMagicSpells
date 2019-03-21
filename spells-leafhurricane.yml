@@ -1,3 +1,5 @@
+#Will be updating this in a youtube vid using variables to make a multispell loop. This will greatly optimize the spell!
+
 rotatedmg:
     spell-class: ".targeted.AreaEffectSpell"
     name: rotatedmg
