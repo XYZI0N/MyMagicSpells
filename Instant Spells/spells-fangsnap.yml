@@ -1,0 +1,34 @@
+snapspell:
+    spell-class: ".MultiSpell"
+    name: snapspell
+    cast-item: 289
+    spells:
+        - snapsummon
+        - DELAY 9
+        - snapsummon2
+
+snapsummon:
+    spell-class: ".ExternalCommandSpell"
+    helper-spell: true
+    temporary-op: true
+    execute-on-console-instead: false
+    command-to-execute:
+        - 'summon minecraft:evocation_fangs ~1 ~ ~'
+        - 'summon minecraft:evocation_fangs ~ ~ ~1'
+        - 'summon minecraft:evocation_fangs ~-1 ~ ~'
+        - 'summon minecraft:evocation_fangs ~ ~ ~-1'
+
+snapsummon2:
+    spell-class: ".ExternalCommandSpell"
+    helper-spell: true
+    temporary-op: true
+    execute-on-console-instead: false
+    command-to-execute:
+        - 'summon minecraft:evocation_fangs ~1 ~ ~1'
+        - 'summon minecraft:evocation_fangs ~-1 ~ ~-1'
+        - 'summon minecraft:evocation_fangs ~-1 ~ ~1'
+        - 'summon minecraft:evocation_fangs ~1 ~ ~-1'
+        - 'summon minecraft:evocation_fangs ~2 ~ ~'
+        - 'summon minecraft:evocation_fangs ~ ~ ~2'
+        - 'summon minecraft:evocation_fangs ~-2 ~ ~'
+        - 'summon minecraft:evocation_fangs ~ ~ ~-2'
