@@ -1,0 +1,121 @@
+#Made a way to return projectiles(This was before I realized there was an easier way to make this work)
+#Never got it to deal damage on the way back.
+
+#Projectile that returns at max distance
+variables:
+    returnend: #Should need a new returnend for each boomerang spell
+          type: player
+          default: 0
+          min: 0
+          max: 80 #Max should be ticks till armorstand is destroyed
+          permanent: true
+Boomerang:
+    spell-class: ".MultiSpell"
+    name: Boomerang
+    cast-item: 289
+    check-individual-cooldowns: false
+    spells:
+        - armorstandsummon
+        - Projectile1
+        - DELAY 2
+        - armorstandtploop
+armorstandtploop:
+    spell-class: ".MultiSpell"
+    name: armorstandtploop
+    modifiers:
+        - variableequals returnend:80 castinstead armorstandkill
+    check-individual-cooldowns: false
+    spells:
+        - armorstandtp
+        - DELAY 1
+        - armorstandtploop
+
+Projectile1:
+    spell-class: ".instant.ParticleProjectileSpell"
+    hit-radius: 1.05
+    projectile-velocity: 15
+    projectile-gravity: 0
+    particle-name: magicCrit
+    particle-horizontal-spread: 0.3
+    particle-vertical-spread: 0
+    particle-count: 10
+    particle-speed: 0
+    max-duration: 1
+    max-distance: 10
+    special-effect-interval: 1
+    stop-on-hit-entity: false
+    stop-on-hit-ground: false
+    hit-air-at-end: true
+    spell-on-hit-air: Projectile_Find
+    spell: Returnprojdmg
+    hit-players: true
+    hit-non-players: true
+Projectile_Find:
+    spell-class: ".targeted.AreaEffectSpell"
+    horizontal-radius: 200
+    vertical-radius: 200
+    point-blank: false
+    spell-source-in-center: true
+    can-target: armor_stand
+    fail-if-no-targets: false
+    spells:
+        - Projectile_Return
+Projectile_Return:
+    spell-class: ".targeted.HomingMissileSpell"
+    target-modifiers:
+        - name %a required
+    can-target: armor_stand
+    projectile-velocity: 15
+    projectile-inertia: 1.5
+    special-effect-interval: 1
+    spell-interval: 5
+    hit-air-during: true
+    spell-on-hit-air: ProjectileHomingReturnDMG
+    spell: Returnprojdmg
+    effects:
+      1:
+        position: special
+        effect: particles
+        particle-name: magicCrit
+        horiz-spread: 0.3
+        vert-spread: 0
+        speed: 0
+        count: 10
+        y-offset: 0
+ProjectileHomingReturnDMG:
+    spell-class: ".targeted.AreaEffectSpell"
+    horizontal-radius: 1.25
+    vertical-radius: 1.25
+    point-blank: false
+    spell-source-in-center: true
+    can-target: players, nonplayers
+    fail-if-no-targets: false
+    spells:
+        - Returnprojdmg
+armorstandtp:
+    spell-class: ".ExternalCommandSpell"
+    helper-spell: true
+    execute-on-console-instead: true
+    variable-mods-cast:
+          - returnend +1
+    command-to-execute:
+        - 'tp @e[type=Armor_Stand,name=%a] %a'
+armorstandsummon:
+    spell-class: ".ExternalCommandSpell"
+    helper-spell: true
+    temporary-op: true
+    command-to-execute:
+        - 'summon armor_stand ~ ~1 ~ {CustomName:"%a",NoGravity:1b,Small:1,Invisible:1,Invulnerable:1}'
+armorstandkill:
+    spell-class: ".ExternalCommandSpell"
+    temporary-op: true
+    variable-mods-cast:
+          - returnend 0
+    command-to-execute:
+        - 'kill @e[type=armor_stand,name=%a]'
+Returnprojdmg:
+    spell-class: ".targeted.PainSpell"
+    helper-spell: true
+    damage: 4
+    obey-los: true
+    can-target: players, nonplayers
