@@ -1,5 +1,5 @@
 #Made a way to return projectiles(This was before I realized there was an easier way to make this work)
-#Never got it to deal damage on the way back.
+#Make the homing spell on hit air cast an invisible particle projectile spell to deal damage on the way back
 
 #Projectile that returns at max distance
 variables:
